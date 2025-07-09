@@ -24,8 +24,12 @@
 
 @layer base {
   html,
-  body,
-  #root {
+  body {
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  #root{
     height: 100%;
   }
 
@@ -38,9 +42,11 @@
 
 @layer utilities {
   .grid-card {
-    aspect-ratio: 128/174; 
+    aspect-ratio: 128/174;
     transform: scale(1.2);
     filter: saturate(0);
+    transform-origin: center center;
+    will-change: transform;
   }
 
   .grid-card:hover {
@@ -48,6 +54,15 @@
   }
 
   .grid-wraper:hover {
-    overflow:visible
+    overflow: visible;
+  }
+
+  .grid-h {
+    height: calc(65vh * 0.87);
+  }
+
+  .text-span {
+    font-size: calc(clamp(1rem, 23.5vw, 47rem) * 0.87);
+    line-height: 90%;
   }
 }
