@@ -65,12 +65,15 @@
     line-height: 90%;
   }
   .overlay-span {
-    font-size: .8rem;
+    font-size: 0.8rem;
     line-height: 100%;
+    opacity: 1;
+    visibility: visible;
   }
   .overlay-img {
-    opacity: 1;
+    opacity: .4;
     filter: saturate(0);
     object-position: center center;
+    will-change: transform, opacity;
   }
 }
