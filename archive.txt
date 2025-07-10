@@ -77,3 +77,17 @@
       <div className="absolute size-full top-0 left-0 right-0">
           <img className="background absolute size-full top-0 left-0 right-0" src={gridImages.Img1} alt="Background" />
       </div>
+
+
+      ---------------
+      <div className="padre relative size-full flex bg-amber-400 p-20">
+        <div className="size-40 bg-green-400 flex justify-center items-center">
+          <div className="grid-card size-full bg-blue-400" id="card1">
+            {/* <img src={gridImages.Img1} alt="Img-1" /> */}
+          </div>
+        </div>
+      </div>
+
+      <div className="overlay  size-full bg-amber-950 top-0 left-0">
+        <img className="hijo absolute top-0 left-0" src={gridImages.Img1} alt="Img-1" />
+      </div>

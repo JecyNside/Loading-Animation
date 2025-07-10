@@ -28,11 +28,9 @@
     height: 100vh;
     overflow: hidden;
   }
-  
-  #root{
+  #root {
     height: 100%;
   }
-
   img {
     width: 100%;
     height: 100%;
@@ -42,27 +40,37 @@
 
 @layer utilities {
   .grid-card {
+    position: relative;
     aspect-ratio: 128/174;
-    transform: scale(1.2);
+    transform: scale(1);
     filter: saturate(0);
     transform-origin: center center;
     will-change: transform;
   }
-
   .grid-card:hover {
     filter: saturate(1);
+    transform: scale(1.2);
   }
-
-  .grid-wraper:hover {
-    overflow: visible;
+  .background {
+    filter: saturate(0);
+    transform-origin: center center;
+    pointer-events: none;
+    will-change: transform;
   }
-
-  .grid-h {
-    height: calc(65vh * 0.87);
+  .background:hover {
+    filter: saturate(1);
   }
-
   .text-span {
     font-size: calc(clamp(1rem, 23.5vw, 47rem) * 0.87);
     line-height: 90%;
+  }
+  .overlay-span {
+    font-size: .8rem;
+    line-height: 100%;
+  }
+  .overlay-img {
+    opacity: 1;
+    filter: saturate(0);
+    object-position: center center;
   }
 }
