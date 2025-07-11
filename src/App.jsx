@@ -7,6 +7,21 @@ import { CustomEase } from "gsap/CustomEase";
 gsap.registerPlugin(Flip, CustomEase);
 
 export default function App() {
+  const tween = () => {
+    const cardContainer = document.querySelector("#card1");
+    const img = document.querySelector(".overlay-img");
+    const state = Flip.getState(img);
+    cardContainer.appendChild(img);
+
+    const flipAnimation = Flip.from(state, {
+      duration: 2,
+      ease: "expo.out",
+      absolute: true,
+    });
+
+    return flipAnimation;
+  };
+
   useGSAP(() => {
     const tl = gsap.timeline();
 
@@ -47,10 +62,11 @@ export default function App() {
         "-=.8"
       )
       .to(".logo-top", {
-        y: "608%",
+        y: "641%",
+        color: "#1e1e1e",
       })
       .to(
-        ".letra-1",
+        "#letra-1",
         {
           x: -337,
           color: "#1e1e1e",
@@ -58,21 +74,25 @@ export default function App() {
         "<"
       )
       .to(
-        ".letra-2",
+        "#letra-2",
         {
           x: 337,
           color: "#1e1e1e",
         },
         "<"
-      );
+      )
+      .call(tween, [])
+      .to(".overlay", {
+        
+      })
   });
 
   return (
-    <>
-      <main className="h-screen flex justify-center items-center px-7 bg-[#fefff8]">
+    <div className="size-full px-7 relative">
+      <main className="size-full flex justify-center items-center bg-[#fefff8]">
         <div className="size-full flex flex-col relative">
           {/* CONTAINER HEADER + GRID */}
-          <div className="flex flex-col gap-9">
+          <div className="flex-1 flex flex-col gap-9">
             {/* HEADER */}
             <header className="flex justify-between p-4 font-NeueMontreal-Bold">
               <div>MENU</div>
@@ -83,7 +103,7 @@ export default function App() {
             <div className="grid grid-cols-12 gap-x-7 gap-y-14">
               <div className="grid-wraper col-[2/2]">
                 <div className="grid-card" id="card1">
-                  <img src={gridImages.Img1} alt="Img-1" />
+                  {/* <img src={gridImages.Img1} alt="Img-1" /> */}
                 </div>
               </div>
 
@@ -126,8 +146,8 @@ export default function App() {
           </div>
 
           {/* FOOTER TITLES */}
-          <div className="max-h-full h-full flex w-full text-[#1e1e1e]">
-            <span className="padre flex self-end-safe text-span font-FKScreamer">
+          <div className="flex-1 size-full flex text-[#1e1e1e]">
+            <span className="w-full flex self-end-safe text-span font-FKScreamer ">
               JECY
             </span>
 
@@ -143,43 +163,49 @@ export default function App() {
               </div>
             </div>
 
-            <span className="padre2 flex self-end-safe text-span font-FKScreamer">
+            <span className="w-full flex self-end-safe text-span font-FKScreamer">
               NSIDE
             </span>
           </div>
         </div>
       </main>
 
-      <div className="ovarlay flex flex-col fixed inset-0 justify-center items-center bg-transparent">
-          <div className="relative z-1 flex gap-5 font-NeueMontreal-Bold text-white">
-            <span className="overlay-span">LET'S JAM TOGETHER</span>
-            <span className="overlay-span">RIGHT NOW</span>
-            <span className="overlay-span">OH YEA</span>
-          </div>
+      <div className="overlay px-7 flex fixed inset-0 justify-center items-center bg-transparent">
+        <div className="relative z-1 flex gap-5 font-NeueMontreal-Bold text-white">
+          <span className="overlay-span">LET'S JAM TOGETHER</span>
+          <span className="overlay-span">RIGHT NOW</span>
+          <span className="overlay-span">OH YEA</span>
+        </div>
 
-          <div className="container-image absolute size-full">
-            <img
-              className="overlay-img"
-              src={gridImages.Img1}
-              alt="img-overlay"
-            />
-          </div>
+        <div className="container-image absolute size-full z-10">
+          <img
+            className="overlay-img"
+            src={gridImages.Img1}
+            alt="img-overlay"
+          />
+        </div>
 
-          <span className="logo-top absolute z-50 text-red-600 font-NeueMontreal-Bold text-[28.5px] leading-[100%] top-7 text-center">
-            ©JAMAREA <br />
-            AGENZIA DI COMUNICAZIONE <br />
-            BRANDING <br />E DIGITAL MARKETING
+        <span className="logo-top absolute text-white font-NeueMontreal-Bold text-[28.5px] leading-[100%] top-7 text-center">
+          ©JAMAREA <br />
+          AGENZIA DI COMUNICAZIONE <br />
+          BRANDING <br />E DIGITAL MARKETING
+        </span>
+
+        <div className="absolute flex text-white bottom-0 gap-10">
+          <span
+            id="letra-1"
+            className="logo-bottom flex self-end-safe text-span font-FKScreamer"
+          >
+            JECY
           </span>
-
-          <div className="absolute flex text-white bottom-0 gap-10">
-            <span className="letra-1 flex self-end-safe text-span font-FKScreamer">
-              JECY
-            </span>
-            <span className="letra-2 flex self-end-safe text-span font-FKScreamer">
-              NSIDE
-            </span>
-          </div>
+          <span
+            id="letra-2"
+            className="logo-bottom flex self-end-safe text-span font-FKScreamer"
+          >
+            NSIDE
+          </span>
+        </div>
       </div>
-    </>
+    </div>
   );
 }
