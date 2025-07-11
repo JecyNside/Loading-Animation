@@ -76,4 +76,9 @@
     object-position: center center;
     will-change: transform, opacity;
   }
+
+  .container-image {
+    object-position: center center;
+    will-change: transform, opacity;
+  }
 }
