@@ -6,20 +6,89 @@ import gsap from "gsap";
 gsap.registerPlugin(Flip);
 
 export default function App() {
-  useGSAP(() => {
+  const tween = () => {
     const cardContainer = document.querySelector("#card5");
     const img = document.querySelector(".container-image");
 
     const state = Flip.getState(img);
 
     cardContainer.appendChild(img);
-    img.classList.remove("fixed", "overflow-hidden", "flex");
+    img.classList.remove("fixed");
 
     Flip.from(state, {
       duration: 2.5,
       ease: "expo.inOut",
       absolute: true,
     });
+  };
+
+  useGSAP(() => {
+    const tl = gsap.timeline();
+
+    tl.from(".overlay-span", {
+      delay: 0.5,
+      yPercent: 130,
+      stagger: 0.3,
+      ease: "power1.inOut",
+      autoAlpha: 0,
+    })
+      .from(".overlay-img", {
+        duration: 1,
+        scale: 1.3,
+        autoAlpha: 0,
+        ease: "power3.out",
+      })
+      .to(".overlay-span", {
+        y: "-100%",
+        autoAlpha: 0,
+        stagger: 0.3,
+        ease: "power1.inOut",
+      })
+      .from(
+        ".logo-top",
+        {
+          yPercent: -150,
+          ease: "power1.out",
+        },
+        "-=.8"
+      )
+      .from(
+        ".logo-bottom",
+        {
+          yPercent: 150,
+          ease: "power1.out",
+          stagger: 0.1,
+        },
+        "<"
+      )
+      .to(
+        ".logo-top",
+        {
+          y: "639%",
+          color: "red",
+          duration: 1,
+        },
+        "+=.5"
+      )
+      .call(tween, [], "-=1.6")
+      .to(
+        "#letra-1",
+        {
+          x: -337,
+          color: "#1e1e1e",
+          duration: 1,
+        },
+        "-=1"
+      )
+      .to(
+        "#letra-2",
+        {
+          x: 337,
+          color: "#1e1e1e",
+          duration: 1,
+        },
+        "<"
+      );
   });
 
   return (
@@ -82,8 +151,8 @@ export default function App() {
 
           {/* FOOTER TITLES */}
           <div className="flex-1 size-full flex text-[#1e1e1e]">
-            <span className="w-full flex self-end-safe text-span font-FKScreamer ">
-              JAM
+            <span className="flex self-end-safe text-span font-FKScreamer ">
+              JECY
             </span>
 
             <div className="flex flex-col py-7 w-full h-full items-center justify-end gap-21 text-center">
@@ -98,20 +167,48 @@ export default function App() {
               </div>
             </div>
 
-            <span className="w-full flex self-end-safe text-span font-FKScreamer">
-              AREA
+            <span className="flex self-end-safe text-span font-FKScreamer">
+              NSIDE
             </span>
           </div>
         </div>
       </main>
 
-      <div className="overlay w-dvw h-dvh flex fixed top-0 left-0 justify-center items-center overflow-hidden z-40">
-        <div className="container-image overflow-hidden bg-black flex size-full fixed z-10">
+      <div className="overlay size-full flex fixed inset-0 justify-center items-center overflow-hidden z-40">
+        <div className="relative z-20 flex gap-5 font-NeueMontreal-Bold text-white">
+          <span className="overlay-span">LET'S JAM TOGETHER</span>
+          <span className="overlay-span">RIGHT NOW</span>
+          <span className="overlay-span">OH YEA</span>
+        </div>
+
+        <div className="container-image overflow-hidden bg-black flex size-full fixed ">
           <img
             className="overlay-img"
             src={gridImages.Img5}
             alt="img-overlay"
           />
+        </div>
+
+        {/* AQUI ES */}
+        <span className="logo-top absolute m-auto top-7 left-0 right-0 text-white font-NeueMontreal-Bold text-[28.5px] leading-[100%] text-center z-10 w-fit">
+          ©JAMAREA <br />
+          AGENZIA DI COMUNICAZIONE <br />
+          BRANDING <br />E DIGITAL MARKETING
+        </span>
+
+        <div className="absolute flex text-white bottom-0 gap-10">
+          <span
+            id="letra-1"
+            className="logo-bottom flex self-end-safe text-span font-FKScreamer z-10"
+          >
+            JECY
+          </span>
+          <span
+            id="letra-2"
+            className="logo-bottom flex self-end-safe text-span font-FKScreamer z-10"
+          >
+            NSIDE
+          </span>
         </div>
       </div>
     </div>
