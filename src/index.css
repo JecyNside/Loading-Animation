@@ -83,15 +83,4 @@
     object-position: center center;
     will-change: transform, opacity;
   }
-
-  /* .logo-alignment-fix {
-    transform: translateX(-44.5px);
-  } */
-
-  .text-center-exact {
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-  }
 }

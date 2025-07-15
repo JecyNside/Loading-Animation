@@ -14,7 +14,6 @@ export default function App() {
     const state = Flip.getState(img);
 
     cardContainer.appendChild(img);
-    /* img.classList.remove("fixed"); */
 
     Flip.from(state, {
       duration: 2.5,
@@ -23,20 +22,11 @@ export default function App() {
   };
 
   useGSAP(() => {
-    let mm = gsap.matchMedia();
-    const tl = gsap.timeline();
+    const mm = gsap.matchMedia();
 
-    /* mm.add("(max-width: 1023px)", () => {
-      const width = 300 * 5.65;
-      Draggable.create("#grid-container", {
-        type: "x",
-        inertia: true,
-        bounds: {
-          minX: 0,
-          maxX: -width,
-        },
-      });
-
+    // Refactorizar
+    function buildTimeline({ letra1Vars, letra2Vars, logoTopY }) {
+      const tl = gsap.timeline();
       tl.from(".overlay-span", {
         delay: 0.5,
         yPercent: 130,
@@ -56,161 +46,59 @@ export default function App() {
           stagger: 0.3,
           ease: "power1.inOut",
         })
-        .from(
-          ".logo-top",
-          {
-            yPercent: -150,
-            ease: "power1.out",
-          },
-          "-=.8"
-        )
+        .from(".logo-top", { yPercent: -150, ease: "power1.out" }, "-=.8")
         .from(
           ".logo-bottom",
-          {
-            yPercent: 150,
-            ease: "power1.out",
-            stagger: 0.1,
-          },
+          { yPercent: 150, ease: "power1.out", stagger: 0.1 },
           "<"
         )
         .to(
           ".logo-top",
-          {
-            y: "592.85%",
-            color: "#1e1e1e",
-            ease: "power2.inOut",
-            duration: 1,
-          },
+          { y: logoTopY, color: "#1e1e1e", ease: "power2.inOut", duration: 1 },
           "+=.5"
         )
         .call(tween, [], "-=1.6")
-        .to(
-          ".overlay-img",
-          {
-            opacity: 1,
-            pointerEvents: "all",
-          },
-          "+=.3"
-        )
-        .to(
-          "#letra-1",
-          {
-            color: "#1e1e1e",
-            ease: "power2.inOut",
-            duration: 1,
-          },
-          "-=2"
-        )
-        .to(
-          "#letra-2",
-          {
-            color: "#1e1e1e",
-            ease: "power2.inOut",
-            duration: 1,
-          },
-          "<"
-        )
-        .to(
-          ".overlay",
-          {
-            autoAlpha: 0,
-            duration: 0,
-          },
-          "+=.7"
-        )
-        .to(".footer-titles", {
-          color: "#1e1e1e",
-          duration: 0,
-        });
-    }); */
+        .to(".overlay-img", { opacity: 1, pointerEvents: "all" }, "+=.3")
+        .to("#letra-1", letra1Vars, "-=2")
+        .to("#letra-2", letra2Vars, "<")
+        .to(".overlay", { autoAlpha: 0, duration: 0 }, "+=.7")
+        .to(".footer-titles", { color: "#1e1e1e", duration: 0 });
+    }
 
-    /* tl.from(".overlay-span", {
-      delay: 0.5,
-      yPercent: 130,
-      stagger: 0.3,
-      ease: "power1.inOut",
-      autoAlpha: 0,
-    })
-      .from(".overlay-img", {
-        duration: 1,
-        scale: 1.3,
-        autoAlpha: 0,
-        ease: "power3.out",
-      })
-      .to(".overlay-span", {
-        y: "-100%",
-        autoAlpha: 0,
-        stagger: 0.3,
-        ease: "power1.inOut",
-      })
-      .from(
-        ".logo-top",
-        {
-          yPercent: -150,
-          ease: "power1.out",
-        },
-        "-=.8"
-      )
-      .from(
-        ".logo-bottom",
-        {
-          yPercent: 150,
-          ease: "power1.out",
-          stagger: 0.1,
-        },
-        "<"
-      )
-      .to(
-        ".logo-top",
-        {
-          y: "638%",
-          color: "#1e1e1e",
-          ease: "power2.inOut",
-          duration: 1,
-        },
-        "+=.5"
-      )
-      .call(tween, [], "-=1.6")
-      .to(
-        ".overlay-img",
-        {
-          opacity: 1,
-          pointerEvents: "all",
-        },
-        "+=.3"
-      )
-      .to(
-        "#letra-1",
-        {
+    mm.add("(max-width: 1023px)", () => {
+      console.log("FONOXD");
+      const width = 300 * 5.65;
+      Draggable.create("#grid-container", {
+        type: "x",
+        inertia: true,
+        bounds: { minX: 0, maxX: -width },
+      });
+
+      buildTimeline({
+        letra1Vars: { color: "#1e1e1e", ease: "power2.inOut", duration: 1 },
+        letra2Vars: { color: "#1e1e1e", ease: "power2.inOut", duration: 1 },
+        logoTopY: "592.85%",
+      });
+    });
+
+    mm.add("(min-width: 1024px)", () => {
+      console.log("PC")
+      buildTimeline({
+        letra1Vars: {
           x: -337,
           color: "#1e1e1e",
           ease: "power2.inOut",
           duration: 1,
         },
-        "-=2"
-      )
-      .to(
-        "#letra-2",
-        {
-          x: 337,
+        letra2Vars: {
+          x: 335.5,
           color: "#1e1e1e",
           ease: "power2.inOut",
           duration: 1,
         },
-        "<"
-      )
-      .to(
-        ".overlay",
-        {
-          autoAlpha: 0,
-          duration: 0,
-        },
-        "+=.7"
-      )
-      .to(".footer-titles", {
-        color: "#1e1e1e",
-        duration: 0,
-      }); */
+        logoTopY: "600.5%",
+      });
+    });
   });
 
   return (
@@ -296,12 +184,12 @@ export default function App() {
           </div>
 
           {/* FOOTER TITLES */}
-          <div className="footer-titles flex-1 size-full flex text-black px-2">
-            <span className="flex self-end-safe text-span font-FKScreamer ">
+          <div className="footer-titles flex-1 size-full grid text-transparent lg:grid-cols-3 grid-cols-2 lg:grid-rows-1 grid-rows-2">
+            <span className="flex self-end-safe text-span justify-center lg:justify-start font-FKScreamer order-2 lg:order-1 col-span-1 row-start-2 lg:row-start-1">
               JECY
             </span>
 
-            <div className="flex flex-col py-7 w-full h-full items-center justify-end gap-21 text-center">
+            <div className="flex flex-col lg:py-7 w-full h-full items-center justify-end gap-21 text-center order-1 lg:order-2 col-span-2 lg:col-span-1 row-start-1">
               <span className="font-NeueMontreal-Bold lg:text-3xl text-xl leading-[100%]">
                 ©JAMAREA <br />
                 AGENZIA DI COMUNICAZIONE <br />
@@ -313,7 +201,7 @@ export default function App() {
               </div>
             </div>
 
-            <span className="flex self-end-safe text-span font-FKScreamer">
+            <span className="flex self-end-safe text-span justify-center lg:justify-start font-FKScreamer order-3 col-span-1 row-start-2 lg:row-start-1">
               NSIDE
             </span>
           </div>
@@ -329,38 +217,21 @@ export default function App() {
         </div>
 
         {/* CONTAINER-IMAGE */}
-        {/* <div className="container-image overflow-hidden bg-black flex size-full fixed">
+        <div className="container-image overflow-hidden bg-black flex size-full fixed">
           <img
             className="overlay-img"
             src={gridImages.Img7}
             alt="img-overlay"
           />
-        </div> */}
+        </div>
 
-        {/* AQUI ES */}
         <span className="logo-top absolute m-auto top-7 left-0 right-0 text-white font-NeueMontreal-Bold text-xl sm:text-2xl lg:text-3xl leading-[100%] text-center z-10 w-fit logo-alignment-fix">
           ©JAMAREA <br />
           AGENZIA DI COMUNICAZIONE <br />
           BRANDING <br />E DIGITAL MARKETING
         </span>
 
-        {/* <div className="absolute flex text-white bottom-0 left-[2.45rem] lg:gap-9 gap-[3.22rem]">
-          <span
-            id="letra-1"
-            className="text-span logo-bottom flex self-end-safe text-8xl font-FKScreamer z-10"
-          >
-            JECY
-          </span>
-          <span
-            id="letra-2"
-            className="text-span logo-bottom flex self-end-safe text-8xl font-FKScreamer z-10"
-          >
-            NSIDE
-          </span>
-        </div> */}
-
-        {/* XDD */}
-        <div className="absolute flex text-red-500 bottom-0 gap-10">
+        <div className="absolute flex text-white bottom-0 lg:gap-10 lg:left-1/2 lg:transform -translate-x-1/2 left-[12.8rem] gap-[5rem]">
           <span
             id="letra-1"
             className="logo-bottom flex self-end-safe text-span font-FKScreamer z-10"
